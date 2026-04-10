@@ -7,6 +7,9 @@ const ALLERGEN_FILTERS = {
   birch: "spc_common like '%birch%'",
   maple: "spc_common like '%maple%'",
   ash: "spc_common like '%ash%'",
+  mulberry: "spc_common like '%mulberry%'",
+  walnut: "spc_common like '%walnut%'",
+  willow: "spc_common like '%willow%'",
 };
 
 // Module-level cache: allergenKey -> GeoJSON FeatureCollection
@@ -26,6 +29,9 @@ function classifyTreeType(spcCommon) {
   if (name.includes('birch')) return 'birch';
   if (name.includes('maple')) return 'maple';
   if (name.includes('ash')) return 'ash';
+  if (name.includes('mulberry')) return 'mulberry';
+  if (name.includes('walnut')) return 'walnut';
+  if (name.includes('willow')) return 'willow';
   return 'other';
 }
 
@@ -92,5 +98,8 @@ export const ALLERGEN_OPTIONS = [
   { key: 'birch', label: 'Birch' },
   { key: 'maple', label: 'Maple' },
   { key: 'ash', label: 'Ash' },
+  { key: 'mulberry', label: 'Mulberry' },
+  { key: 'walnut', label: 'Walnut' },
+  { key: 'willow', label: 'Willow' },
   { key: 'all', label: "I don't know/The outdoors generally make me miserable" },
 ];

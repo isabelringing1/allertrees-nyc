@@ -17,8 +17,11 @@ export const HEALTH_COLORS = {
 export const TREE_TYPE_COLORS = {
   oak: '#3b82f6',      // Blue
   birch: '#facc15',    // Yellow
-  maple: '#ff8800',    // Red
+  maple: '#ff8800',    // Orange
   ash: '#86efac',      // Green
+  mulberry: '#e879f9', // Pink
+  walnut: '#a0522d',   // Brown
+  willow: '#2dd4bf',   // Teal
   other: '#d4d4d8',    // Grey fallback
 };
 
@@ -79,6 +82,9 @@ export const pointLayer = {
       'birch', '#facc15',
       'maple', '#ef4444',
       'ash', '#86efac',
+      'mulberry', '#e879f9',
+      'walnut', '#a0522d',
+      'willow', '#2dd4bf',
       '#d4d4d8',
     ],
     'circle-radius': ['interpolate', ['linear'], ['zoom'], 9.5, 1.5, 13, 4, 16, 7],

@@ -58,6 +58,7 @@ export default function NeighborhoodPanel({ treeGeoJson, onNeighborhoodClick }) 
       </div>
       {expanded && (
         <div className="neighborhood-panel-body">
+          <div className="neighborhood-row ">These neighborhoods will probably make you sneeze:</div>
           {boroughData.map(({ borough, neighborhoods }) => (
             <div key={borough} className="neighborhood-borough-group">
               <div className="neighborhood-borough-name">{borough}</div>
