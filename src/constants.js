@@ -17,7 +17,7 @@ export const HEALTH_COLORS = {
 export const TREE_TYPE_COLORS = {
   oak: '#3b82f6',      // Blue
   birch: '#facc15',    // Yellow
-  maple: '#ef4444',    // Red
+  maple: '#ff8800',    // Red
   ash: '#86efac',      // Green
   other: '#d4d4d8',    // Grey fallback
 };

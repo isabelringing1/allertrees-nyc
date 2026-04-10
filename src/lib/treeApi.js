@@ -92,5 +92,5 @@ export const ALLERGEN_OPTIONS = [
   { key: 'birch', label: 'Birch' },
   { key: 'maple', label: 'Maple' },
   { key: 'ash', label: 'Ash' },
-  { key: 'all', label: "I don't know, but the outdoors generally make me miserable" },
+  { key: 'all', label: "I don't know/The outdoors generally make me miserable" },
 ];

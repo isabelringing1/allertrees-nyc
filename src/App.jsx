@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useRef } from 'react';
 import TreeMap from './components/TreeMap';
 import RoutePanel from './components/RoutePanel';
 import AllergenPicker from './components/AllergenPicker';
@@ -68,6 +68,12 @@ export default function App() {
     return features.length > 0 ? { type: 'FeatureCollection', features } : null;
   }, [startCoords, endCoords]);
 
+  const mapRef = useRef(null);
+
+  const handleNeighborhoodClick = useCallback(({ lng, lat }) => {
+    mapRef.current?.flyTo({ center: [lng, lat], zoom: 14, duration: 1200 });
+  }, []);
+
   const [showAbout, setShowAbout] = useState(false);
 
   return (
@@ -100,6 +106,7 @@ export default function App() {
       )}
       <div className="map-container">
         <TreeMap
+          ref={mapRef}
           treeGeoJson={treeGeoJson}
           routeGeoJson={routeGeoJson}
           highlightedTreesGeoJson={highlightedTreesGeoJson}
@@ -114,18 +121,20 @@ export default function App() {
             selectedAllergens={selectedAllergens}
             treeCount={treeGeoJson?.features?.length ?? 0}
           />
-          <RoutePanel
-            route={route}
-            treeIndexLoading={treeIndexLoading}
-            treesReady={!!index}
-            selectedAllergen={selectedAllergens}
-            onCalculate={route.calculateRoute}
-            activeInput={activeInput}
-            setActiveInput={setActiveInput}
-            mapPin={mapPin}
-            onCoordsChange={handleCoordsChange}
-          />
-          <NeighborhoodPanel treeGeoJson={treeGeoJson} />
+          {!!index && (
+            <RoutePanel
+              route={route}
+              treeIndexLoading={treeIndexLoading}
+              treesReady={!!index}
+              selectedAllergen={selectedAllergens}
+              onCalculate={route.calculateRoute}
+              activeInput={activeInput}
+              setActiveInput={setActiveInput}
+              mapPin={mapPin}
+              onCoordsChange={handleCoordsChange}
+            />
+          )}
+          <NeighborhoodPanel treeGeoJson={treeGeoJson} onNeighborhoodClick={handleNeighborhoodClick} />
         </div>
       </div>
     </div>

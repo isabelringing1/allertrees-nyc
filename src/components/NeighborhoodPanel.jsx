@@ -2,36 +2,47 @@ import { useState, useMemo } from 'react';
 import './NeighborhoodPanel.css';
 
 const TOP_N = 5;
+const BOROUGH_ORDER = ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'];
 
-export default function NeighborhoodPanel({ treeGeoJson }) {
+export default function NeighborhoodPanel({ treeGeoJson, onNeighborhoodClick }) {
   const [expanded, setExpanded] = useState(false);
 
   const boroughData = useMemo(() => {
     if (!treeGeoJson?.features?.length) return null;
 
-    // Count trees per neighborhood+borough
-    const counts = new Map();
+    // Count trees and accumulate coordinates per neighborhood+borough
+    const stats = new Map();
     for (const f of treeGeoJson.features) {
       const { neighborhood, borough } = f.properties;
       if (!neighborhood || !borough) continue;
       const key = `${borough}|||${neighborhood}`;
-      counts.set(key, (counts.get(key) || 0) + 1);
+      if (!stats.has(key)) stats.set(key, { count: 0, lngSum: 0, latSum: 0 });
+      const s = stats.get(key);
+      s.count++;
+      const [lng, lat] = f.geometry.coordinates;
+      s.lngSum += lng;
+      s.latSum += lat;
     }
 
     // Group by borough
     const byBorough = new Map();
-    for (const [key, count] of counts) {
+    for (const [key, { count, lngSum, latSum }] of stats) {
       const [borough, neighborhood] = key.split('|||');
       if (!byBorough.has(borough)) byBorough.set(borough, []);
-      byBorough.get(borough).push({ neighborhood, count });
+      byBorough.get(borough).push({
+        neighborhood,
+        count,
+        lng: lngSum / count,
+        lat: latSum / count,
+      });
     }
 
-    // Sort boroughs alphabetically, neighborhoods by count desc, take top N
-    return Array.from(byBorough.entries())
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([borough, neighborhoods]) => ({
+    // Order boroughs per spec, neighborhoods by count desc, take top N
+    return BOROUGH_ORDER
+      .filter((b) => byBorough.has(b))
+      .map((borough) => ({
         borough,
-        neighborhoods: neighborhoods
+        neighborhoods: byBorough.get(borough)
           .sort((a, b) => b.count - a.count)
           .slice(0, TOP_N),
       }));
@@ -50,8 +61,12 @@ export default function NeighborhoodPanel({ treeGeoJson }) {
           {boroughData.map(({ borough, neighborhoods }) => (
             <div key={borough} className="neighborhood-borough-group">
               <div className="neighborhood-borough-name">{borough}</div>
-              {neighborhoods.map(({ neighborhood, count }) => (
-                <div key={neighborhood} className="neighborhood-row">
+              {neighborhoods.map(({ neighborhood, count, lng, lat }) => (
+                <div
+                  key={neighborhood}
+                  className="neighborhood-row neighborhood-row-clickable"
+                  onClick={() => onNeighborhoodClick?.({ lng, lat })}
+                >
                   <span className="neighborhood-name">{neighborhood}</span>
                   <span className="neighborhood-count">{count.toLocaleString()}</span>
                 </div>

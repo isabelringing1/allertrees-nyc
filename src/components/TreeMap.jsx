@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import Map, { Source, Layer, Popup } from 'react-map-gl/mapbox';
 import TreePopup from './TreePopup';
 import {
@@ -22,8 +22,12 @@ function getBounds(coords) {
   return [[minLng, minLat], [maxLng, maxLat]];
 }
 
-export default function TreeMap({ treeGeoJson, routeGeoJson, highlightedTreesGeoJson, previewMarkersGeoJson, activeInput, onMapPin }) {
+export default forwardRef(function TreeMap({ treeGeoJson, routeGeoJson, highlightedTreesGeoJson, previewMarkersGeoJson, activeInput, onMapPin }, ref) {
   const mapRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    flyTo: (opts) => mapRef.current?.flyTo(opts),
+  }));
   const hoverDotRef = useRef(null);
   const [popupInfo, setPopupInfo] = useState(null);
 
@@ -160,4 +164,4 @@ export default function TreeMap({ treeGeoJson, routeGeoJson, highlightedTreesGeo
       />
     </Map>
   );
-}
+})
