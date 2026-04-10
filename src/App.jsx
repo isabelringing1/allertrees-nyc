@@ -95,8 +95,8 @@ export default function App() {
           <div className="about-modal" onClick={(e) => e.stopPropagation()}>
             <div className="about-header">About</div>
             <div className="about-body">
-              <p>Do you love when the weather warms up, but dread the subsequent pollen explosion? This map shows you the top allergy hotspots, and how to best plan your outings to avoid them. </p>
-              <p>Data is from the <a href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data" target='_blank'>2015 Street Tree Census</a> (last updated in 2024), courtesy of <a href="https://opendata.cityofnewyork.us/" target='_blank'>NYC OpenData</a>. Explore the entire <a href="https://tree-map.nycgovparks.org/tree-map" target='_blank'>NYC Tree Map</a>!</p>
+              <p>I love when it gets warm after a bleak winter, but always dread the subsequent pollen explosion. That's how <b>Allertrees NYC</b> came about, an interactive tool that identifies your top pollen hotspots and shows you how to avoid them. May your sneezes be minimal!</p>
+              <p>Data is from the amazing <a href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data" target='_blank'>2015 Street Tree Census</a> (last updated in 2024), courtesy of <a href="https://opendata.cityofnewyork.us/" target='_blank'>NYC OpenData</a>. Explore the entire NYC Tree Map <a href="https://tree-map.nycgovparks.org/tree-map" target='_blank'>here</a>.</p>
               <p>Made by <a href="https://isabisabel.com" target='_blank'>Isabel</a> <img src={isabisabel} className="isabisabel" onClick={() => window.open('https://isabisabel.com', '_blank')} /></p>
             </div>
           </div>
