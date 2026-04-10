@@ -104,7 +104,7 @@ export default function App() {
       )}
       {treeIndexLoading && (
         <div className="loading-overlay">
-          <div className="loading-modal">Loading...</div>
+          <div className="loading-modal">Loading Trees...</div>
         </div>
       )}
       <div className="map-container">

@@ -4,6 +4,7 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   overflow: visible;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  pointer-events: all;
 }
 
 .neighborhood-panel-header {
@@ -103,4 +104,27 @@
   color: #7c3aed;
   margin-left: 8px;
   flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .neighborhood-panel {
+    width: 50vw;
+  }
+
+  .neighborhood-panel-header {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .neighborhood-panel-body {
+    padding: 8px 10px 10px;
+  }
+
+  .neighborhood-row {
+    font-size: 11px;
+  }
+
+  .neighborhood-borough-name {
+    font-size: 11px;
+  }
 }

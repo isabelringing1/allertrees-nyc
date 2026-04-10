@@ -184,6 +184,12 @@ html, body, #root {
   margin: -7px 0px;
 }
 
+@media (min-width: 600px) {
+  .sidebar {
+    overflow-y: auto;
+  }
+}
+
 @media (max-width: 600px) {
   .header {
     height: 64px;
@@ -194,5 +200,12 @@ html, body, #root {
 
   .header-title {
     text-align: left;
+    margin-right: 20px;
+  }
+
+  .sidebar{
+    pointer-events: none;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  
   }
 }
