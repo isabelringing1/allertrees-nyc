@@ -52,6 +52,23 @@
   padding: 4px 0;
   border-bottom: 1px solid #ecc5ff;
   margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.neighborhood-borough-name-expandable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.neighborhood-borough-name-expandable:hover {
+  color: #7c3aed;
+}
+
+.neighborhood-borough-chevron {
+  font-size: 9px;
+  margin-left: 6px;
 }
 
 .neighborhood-row {

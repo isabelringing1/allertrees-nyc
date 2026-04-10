@@ -19,6 +19,8 @@ export default function App() {
   const [startCoords, setStartCoords] = useState(null);
   const [endCoords, setEndCoords] = useState(null);
 
+  var isMobile = window.innerWidth < 600;
+
   const handleAllergenSelect = useCallback((allergenKeys) => {
     setSelectedAllergens(allergenKeys);
     route.reset();
@@ -82,7 +84,7 @@ export default function App() {
     <div className="app">
       <div className="header">
         <span className="header-title">
-          <img src={flower} className="header-flower" />
+          {!isMobile && <img src={flower} className="header-flower" />}
           I Love Spring But It Makes Me Want To Die
           <img src={flower} className="header-flower" />
           </span>

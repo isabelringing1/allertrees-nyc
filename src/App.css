@@ -183,3 +183,16 @@ html, body, #root {
   height: 24px;
   margin: -7px 0px;
 }
+
+@media (max-width: 600px) {
+  .header {
+    height: 64px;
+    padding: 12px 16px;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .header-title {
+    text-align: left;
+  }
+}
