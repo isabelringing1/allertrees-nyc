@@ -39,7 +39,7 @@ function distanceMeters(lng1, lat1, lng2, lat2) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-function countTreesNearPoint(index, lng, lat, radius) {
+export function countTreesNearPoint(index, lng, lat, radius) {
   const col = Math.floor((lng - MIN_LNG) / CELL_LNG);
   const row = Math.floor((lat - MIN_LAT) / CELL_LAT);
   const found = [];
@@ -161,6 +161,48 @@ export function findDensestSegment(index, routeCoords, numSegments = 5) {
     segmentIndex: worstIdx,
     treeCount: worstScore,
   };
+}
+
+export function generateRadialWaypoints(lng, lat, distances, numAngles = 8) {
+  const points = [];
+  for (const dist of distances) {
+    for (let i = 0; i < numAngles; i++) {
+      const angle = (2 * Math.PI * i) / numAngles;
+      const dLat = (dist * Math.cos(angle)) / DEG_TO_M;
+      const dLng = (dist * Math.sin(angle)) / (COS_LAT * DEG_TO_M);
+      points.push([lng + dLng, lat + dLat]);
+    }
+  }
+  return points;
+}
+
+export function hasSignificantBacktracking(routeCoords, maxBacktrackFraction = 0.15) {
+  const start = routeCoords[0];
+  const end = routeCoords[routeCoords.length - 1];
+
+  const dx = (end[0] - start[0]) * COS_LAT * DEG_TO_M;
+  const dy = (end[1] - start[1]) * DEG_TO_M;
+  const totalDist = Math.sqrt(dx * dx + dy * dy);
+  if (totalDist < 50) return false;
+
+  const ux = dx / totalDist;
+  const uy = dy / totalDist;
+  const maxBacktrack = totalDist * maxBacktrackFraction;
+
+  let maxProgress = -Infinity;
+
+  for (const coord of routeCoords) {
+    const px = (coord[0] - start[0]) * COS_LAT * DEG_TO_M;
+    const py = (coord[1] - start[1]) * DEG_TO_M;
+    const progress = px * ux + py * uy;
+
+    if (progress < maxProgress - maxBacktrack) {
+      return true;
+    }
+    maxProgress = Math.max(maxProgress, progress);
+  }
+
+  return false;
 }
 
 export function computeBearing(coord1, coord2) {

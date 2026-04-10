@@ -80,7 +80,7 @@ export const pointLayer = {
       ['get', 'tree_type'],
       'oak', '#3b82f6',
       'birch', '#facc15',
-      'maple', '#ef4444',
+      'maple', '#ff8800',
       'ash', '#86efac',
       'mulberry', '#e879f9',
       'walnut', '#a0522d',

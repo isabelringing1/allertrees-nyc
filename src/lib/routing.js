@@ -1,4 +1,4 @@
-import { countTreesAlongRoute, findTreesAlongRoute, findDensestSegment, computeBearing, offsetPoint } from './spatialIndex';
+import { countTreesAlongRoute, findTreesAlongRoute, findDensestSegment, countTreesNearPoint, generateRadialWaypoints, hasSignificantBacktracking } from './spatialIndex';
 
 const NYC_BBOX = [-74.257159, 40.496010, -73.699215, 40.915568];
 
@@ -77,6 +77,17 @@ export async function findBestRoute(start, end, token, treeIndex, maxDetourSecon
       treeCount: countTreesAlongRoute(treeIndex, r.geometry.coordinates),
     }));
 
+  // Filter out routes with significant backtracking (always keep shortest as fallback)
+  candidates = candidates.filter(
+    (c) => !hasSignificantBacktracking(c.geometry.coordinates)
+  );
+  if (candidates.length === 0) {
+    candidates = [{
+      ...shortest,
+      treeCount: countTreesAlongRoute(treeIndex, shortest.geometry.coordinates),
+    }];
+  }
+
   // Step 2: Try waypoint-based avoidance routes
   const bestSoFar = candidates.reduce(
     (best, c) => (c.treeCount < best.treeCount ? c : best),
@@ -86,37 +97,18 @@ export async function findBestRoute(start, end, token, treeIndex, maxDetourSecon
   if (bestSoFar && bestSoFar.treeCount > 0) {
     const coords = bestSoFar.geometry.coordinates;
 
-    // Use fixed offsets that cover nearby parallel streets (~1-2 blocks)
-    const offsets = [100, 200, -100, -200];
+    // Generate waypoints in all directions (8 compass points) around key locations
+    const distances = [100, 200];
+    let waypointSpecs = [];
 
-    // Try waypoints at multiple positions along the route (1/3, 1/2, 2/3)
-    const fractions = [0.33, 0.5, 0.67];
-    const waypointSpecs = [];
+    // Radial waypoints around the midpoint between start and end
+    const midLng = (start.lng + end.lng) / 2;
+    const midLat = (start.lat + end.lat) / 2;
+    waypointSpecs.push(...generateRadialWaypoints(midLng, midLat, distances));
 
-    for (const frac of fractions) {
-      const idx = Math.min(Math.floor(coords.length * frac), coords.length - 2);
-      const bearing = computeBearing(coords[idx], coords[idx + 1]);
-      const point = coords[idx];
-
-      for (const d of offsets) {
-        waypointSpecs.push(offsetPoint(point[0], point[1], bearing, d));
-      }
-    }
-
-    // Also try waypoints at the densest segment specifically
+    // Radial waypoints around the densest tree segment
     const { midpoint } = findDensestSegment(treeIndex, coords);
-    let closestIdx = 0;
-    let closestDist = Infinity;
-    for (let i = 0; i < coords.length - 1; i++) {
-      const dx = coords[i][0] - midpoint[0];
-      const dy = coords[i][1] - midpoint[1];
-      const d = dx * dx + dy * dy;
-      if (d < closestDist) { closestDist = d; closestIdx = i; }
-    }
-    const denseBearing = computeBearing(coords[closestIdx], coords[Math.min(closestIdx + 1, coords.length - 1)]);
-    for (const d of offsets) {
-      waypointSpecs.push(offsetPoint(midpoint[0], midpoint[1], denseBearing, d));
-    }
+    waypointSpecs.push(...generateRadialWaypoints(midpoint[0], midpoint[1], distances));
 
     // Deduplicate waypoints that are very close together
     const uniqueWaypoints = [];
@@ -127,14 +119,22 @@ export async function findBestRoute(start, end, token, treeIndex, maxDetourSecon
       if (!isDupe) uniqueWaypoints.push(wp);
     }
 
-    // Fetch routes via waypoints in parallel (cap at 8 to avoid rate limits)
-    const toTry = uniqueWaypoints.slice(0, 8);
+    // Score waypoints by nearby tree density, prioritize tree-sparse areas
+    const scored = uniqueWaypoints.map((wp) => ({
+      wp,
+      nearbyTrees: countTreesNearPoint(treeIndex, wp[0], wp[1], 50).length,
+    }));
+    scored.sort((a, b) => a.nearbyTrees - b.nearbyTrees);
+
+    // Fetch routes via best waypoints in parallel
+    const toTry = scored.slice(0, 12).map((s) => s.wp);
     const waypointRoutes = await Promise.all(
       toTry.map((wp) => getRouteViaWaypoint(start, wp, end, token).catch(() => null))
     );
 
     for (const wr of waypointRoutes) {
       if (!wr || wr.duration > maxDuration) continue;
+      if (hasSignificantBacktracking(wr.geometry.coordinates)) continue;
       wr.treeCount = countTreesAlongRoute(treeIndex, wr.geometry.coordinates);
       candidates.push(wr);
     }

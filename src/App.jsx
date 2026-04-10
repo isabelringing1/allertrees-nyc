@@ -8,6 +8,8 @@ import useRoute from './hooks/useRoute';
 import { reverseGeocode } from './lib/search';
 import { MAPBOX_TOKEN } from './constants';
 import flower from '/flower.png';
+import isabisabel from '/isabisabel.png';
+
 export default function App() {
   const { index, loading: treeIndexLoading, geojson: treeGeoJson, loadAllergen } = useTreeIndex();
   const route = useRoute(index);
@@ -91,10 +93,9 @@ export default function App() {
           <div className="about-modal" onClick={(e) => e.stopPropagation()}>
             <div className="about-header">About</div>
             <div className="about-body">
-              <p>Allergic to trees? You're not alone. New York City is full of highly allergenic trees like oaks, birches, maples, and ashes.</p>
-              <p>This tool helps you plan walking routes that avoid the trees that make you miserable, based on how much of a detour you're willing to take.</p>
-              <p>Data is from the <a href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data">2015 Street Tree Census</a>, courtesy of <a href="https://opendata.cityofnewyork.us/">NYC OpenData</a>. You can explore their whole Tree Map <a href="https://tree-map.nycgovparks.org/tree-map">here</a>.</p>
-              <p>Made by <a href="https://isabisabel.com">Isabel</a></p>
+              <p>Do you love when the weather warms up, but dread the subsequent pollen explosion? This map shows you the top allergy hotspots, and how to best plan your outings to avoid them. </p>
+              <p>Data is from the <a href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh/about_data" target='_blank'>2015 Street Tree Census</a> (last updated in 2024), courtesy of <a href="https://opendata.cityofnewyork.us/" target='_blank'>NYC OpenData</a>. Explore the entire <a href="https://tree-map.nycgovparks.org/tree-map" target='_blank'>NYC Tree Map</a>!</p>
+              <p>Made by <a href="https://isabisabel.com" target='_blank'>Isabel</a> <img src={isabisabel} className="isabisabel" onClick={() => window.open('https://isabisabel.com', '_blank')} /></p>
             </div>
           </div>
         </div>

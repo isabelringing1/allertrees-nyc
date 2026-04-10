@@ -100,7 +100,7 @@ export default forwardRef(function TreeMap({ treeGeoJson, routeGeoJson, highligh
       mapboxAccessToken={MAPBOX_TOKEN}
       initialViewState={INITIAL_VIEW_STATE}
       style={{ width: '100%', height: '100%', cursor: activeInput ? 'crosshair' : '' }}
-      mapStyle="mapbox://styles/mapbox/light-v11"
+      mapStyle="mapbox://styles/isabelringing1/cmnsz4shs000501s3bxnxa519"
       interactiveLayerIds={['tree-point']}
       onClick={onClick}
     >
