@@ -1,0 +1,240 @@
+.route-panel {
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  overflow: visible;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.route-panel-header {
+  background: #ecc5ff;
+  color: #491d76;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.route-panel-collapsed .route-panel-header {
+  border-radius: 8px;
+}
+
+.route-panel-chevron {
+  font-size: 10px;
+  margin-left: 8px;
+}
+
+.route-panel-body {
+  background: #fff;
+  padding: 14px;
+  border-radius: 0 0 8px 8px;
+}
+
+.route-panel-field {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.route-panel-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #491d76;
+  margin-bottom: 4px;
+}
+
+.route-panel-field input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.route-panel-field input[type="text"]:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.15);
+}
+
+.route-panel-field input[type="text"].has-coords {
+  border-color: #86efac;
+  background: #f0fdf4;
+}
+
+.route-panel-map-hint {
+  font-size: 11px;
+  color: #7c3aed;
+  margin-top: 3px;
+  font-style: italic;
+}
+
+.route-panel-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.route-panel-dropdown li {
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #374151;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.route-panel-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.route-panel-dropdown li:hover {
+  background: #f5f3ff;
+  color: #491d76;
+}
+
+.route-panel-slider {
+  margin-bottom: 14px;
+}
+
+.route-panel-slider label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #491d76;
+  margin-bottom: 6px;
+}
+
+.route-panel-slider label span {
+  font-weight: 700;
+  color: #7c3aed;
+}
+
+.route-panel-slider input[type="range"] {
+  width: 100%;
+  accent-color: #7c3aed;
+  cursor: pointer;
+}
+
+.route-panel-btn {
+  width: 100%;
+  padding: 10px;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.route-panel-btn:hover:not(:disabled) {
+  background: #6d28d9;
+}
+
+.route-panel-btn:disabled {
+  background: #c4b5fd;
+  cursor: not-allowed;
+}
+
+.route-panel-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.route-panel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7c3aed;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.route-panel-error {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #991b1b;
+}
+
+.route-panel-result {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f5f3ff;
+  border-radius: 6px;
+}
+
+.route-panel-result-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #374151;
+  padding: 2px 0;
+}
+
+.route-panel-result-row .value {
+  font-weight: 600;
+  color: #491d76;
+}
+
+.route-panel-result-row .value .struck {
+  text-decoration: line-through;
+  color: #c4b5fd;
+  font-weight: 400;
+  margin-right: 6px;
+}
+
+.route-panel-trees {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.route-panel-trees .trees-label-top {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.route-panel-trees .trees-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #7c3aed;
+  line-height: 1.2;
+}
+
+.route-panel-trees .trees-label-bottom {
+  font-size: 12px;
+  color: #6b7280;
+}

@@ -1,0 +1,143 @@
+.allergen-picker {
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  overflow: visible;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.allergen-picker.collapsed {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.allergen-collapsed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ecc5ff;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #491d76;
+  font-weight: 600;
+}
+
+.allergen-collapsed-body {
+  background: #fff;
+  padding: 10px 14px;
+}
+
+.allergen-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.allergen-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  background: #f5f3ff;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.allergen-color-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.allergen-tree-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #491d76;
+  text-align: center;
+  padding-top: 6px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.allergen-change-btn {
+  background: none;
+  border: 1px solid #491d76;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: #491d76;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.allergen-change-btn:hover {
+  background: rgba(73, 29, 118, 0.1);
+}
+
+.allergen-header {
+  background: #ecc5ff;
+  color: #491d76;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 8px 8px 0 0;
+}
+
+.allergen-body {
+  background: #fff;
+  padding: 10px 14px 14px;
+  border-radius: 0 0 8px 8px;
+}
+
+.allergen-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.allergen-option input[type="checkbox"] {
+  accent-color: #7c3aed;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.allergen-option span {
+  line-height: 1.3;
+}
+
+.allergen-submit-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.allergen-submit-btn:hover:not(:disabled) {
+  background: #6d28d9;
+}
+
+.allergen-submit-btn:disabled {
+  background: #c4b5fd;
+  cursor: not-allowed;
+}

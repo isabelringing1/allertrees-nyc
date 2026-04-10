@@ -1,0 +1,79 @@
+.neighborhood-panel {
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  overflow: visible;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.neighborhood-panel-header {
+  background: #ecc5ff;
+  color: #491d76;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.neighborhood-panel-collapsed .neighborhood-panel-header {
+  border-radius: 8px;
+}
+
+.neighborhood-panel-chevron {
+  font-size: 10px;
+  margin-left: 8px;
+}
+
+.neighborhood-panel-body {
+  background: #fff;
+  padding: 10px 14px 14px;
+  border-radius: 0 0 8px 8px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.neighborhood-borough-group {
+  margin-bottom: 10px;
+}
+
+.neighborhood-borough-group:last-child {
+  margin-bottom: 0;
+}
+
+.neighborhood-borough-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #491d76;
+  padding: 4px 0;
+  border-bottom: 1px solid #ecc5ff;
+  margin-bottom: 4px;
+}
+
+.neighborhood-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 12px;
+  color: #374151;
+}
+
+.neighborhood-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.neighborhood-count {
+  font-weight: 600;
+  color: #7c3aed;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
